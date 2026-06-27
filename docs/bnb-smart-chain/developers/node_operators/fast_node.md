@@ -50,14 +50,16 @@ Your --datadir flag should point to the extracted chaindata folder path
 
 ### Prune all trie data
 
-Fast node does not need trie data anymore, prune the trie data by the following command.
+Fast node does not need trie data anymore. Delete the trie state by the following command.
 ```
-./geth snapshot insecure-prune-all --datadir ./node  ./genesis.json
+./geth db delete-trie-state --datadir ./node
 ```
 
 ### Start Fast Node Without Snapshot Verification
 
 ```bash
 ## start a fast node
-./geth --tries-verify-mode none --config ./config.toml --datadir ./node  --cache 8000 --rpc.allow-unprotected-txs --history.transactions 0
+./geth --tries-verify-mode none --rpc.allow-unprotected-txs --cache 10000 --history.transactions 360000  --datadir <datadir> --http.corsdomain * --config ./config.toml --history.logs 576000
 ```
+
+> **Note**: Consider adding `--history.logs.disable` for better performance, but `eth_getLogs` will be slower.
